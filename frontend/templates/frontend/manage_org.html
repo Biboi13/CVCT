@@ -1,0 +1,61 @@
+{% extends "frontend/base.html"  %}
+
+{% block title %}Organization Management{% endblock %}
+
+{% block main %}
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Organization Management</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Organization Management</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Organization Table</div>
+            <div class="card-body">
+                <button type="button" class="btn btn-outline-success mb-3 "><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Organization </button>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="text-align: center;" >
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Video Conference Tool used</th>
+                                <th>Internet Bandwidth</th>
+                                <th>Problem Occured</th>
+                                <th>Satisfactory</th>
+                                <th>Start date of Using the Conference Tool</th>
+                                <th>Recommended Video Conference Tool</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                
+                                
+                            </tr>
+                        </thead>
+                     
+                        <tbody>
+                            {% for item in org_list %}
+                            <tr>
+                                <td>{{ item.org_name }}</td>
+                                <td>{{ item.org_place  }}</td>
+                                <td>{{ item.org_used_vct }}</td>
+                                <td>{{ item.org_internet_bandwidth }}</td>
+                                <td>{{ item.org_problem_occurred }}</td>
+                                <td>{{ item.org_satifactory  }}</td>
+                                <td>{{ item.org_started_using_vct_name }}</td>
+                                <td>{{ item.org_recommend_vct }}</td>
+                                <td><button type="button" class="btn btn-outline-warning"><i class="fas fa-edit"></i>Edit</button></td>
+                                <td><button type="button" class="btn btn-outline-danger">  <i class="far fa-trash-alt"></i> Delete</button></td>
+                                
+                            </tr>  
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

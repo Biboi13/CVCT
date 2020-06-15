@@ -1,0 +1,59 @@
+{% extends "frontend/base.html"  %}
+
+{% block title %}Individual Management{% endblock %}
+
+{% block main %}
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Individual Management</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Individual Management</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Individual Table</div>
+            <div class="card-body">
+                <button type="button" class="btn btn-outline-success mb-3 "><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Individual </button>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Video Conference Tool used</th>
+                                <th>Internet Bandwidth</th>
+                                <th>Problem Occured</th>
+                                <th>Satisfactory</th>
+                                <th>Start date of Using the Conference Tool</th>
+                                <th>Recommended Video Conference Tool</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                     
+                        <tbody>
+                            {% for item in indv_list %}
+                            <tr>
+                                <td>{{ item.indv_name }}</td>
+                                <td>{{ item.indv_place  }}</td>
+                                <td>{{ item.indv_used_vct }}</td>
+                                <td>{{ item.indv_internet_bandwidth }}</td>
+                                <td>{{ item.indv_problem_occurred }}</td>
+                                <td>{{ item.indv_satifactory  }}</td>
+                                <td>{{ item.indv_started_using_vct_name }}</td>
+                                <td>{{ item.indv_recommend_vct }}</td>
+                                <td><button type="button" class="btn btn-outline-warning"><i class="fas fa-edit"></i>Edit</button></td>
+                                <td><button type="button" class="btn btn-outline-danger"> <i class="far fa-trash-alt"></i>Delete</button></td>
+                                
+                            </tr>  
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
