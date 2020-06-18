@@ -11,6 +11,7 @@ from django.views.generic import CreateView
 from django.views.generic import TemplateView
 # from chartjs.views.lines import BaseLineChartView
 
+import datetime
 import json
 
 from django.db.models import Sum, Count
@@ -44,55 +45,154 @@ def manage_org(request):
 #charts
 
 def pie_chart(request):
-    labels_chart2 = []
-    data_chart2 = []
+   
 
-    queryset = VCT.objects.order_by('vct_active_users')[:5]
+    # individual_using_vct_q = Individual.objects.filter().values('indv_recommend_vct').order_by('sum').annotate(sum=Count('indv_recommend_vct'))
     
-    for active_user in queryset:
-        labels_chart2.append(active_user.vct_name)
-        data_chart2.append(active_user.vct_active_users)
+    # chart 1
+    indv_started_labels = []
+    indv_started_data = []
+    individual_started_q= Individual.objects.filter().\
+                    values('indv_started_using_vct_name').order_by('indv_started_using_vct_name').\
+                    annotate(sum=Count('indv_used_vct'))
     
-    return render(request, 'frontend/chart.html', {
-        'labels_chart2': labels_chart2 ,
-        'data_chart2':  data_chart2 ,
-    })
+    for i in individual_started_q:
+        indv_started_labels.append(str(i['indv_started_using_vct_name']))
+        indv_started_data.append(i['sum'])
 
 
-#recommend Chart
-def pie_chart_VCT_recommend(request):
-    labels_1 = []
-    data_1 = []
-
-    q = Individual.objects.filter().values('inv_place').order_by('sum').annotate(sum=Count('inv_place'))
+    # chart 2
+    org_started_labels = []
+    org_started_data = []
+    organization_started_q= Organization.objects.filter().\
+                    values('org_started_using_vct_name').order_by('org_started_using_vct_name').\
+                    annotate(sum=Count('org_used_vct'))
     
-    for i in q :
-        data_1.append((i['sum']))
-        labels_1.append(i['inv_place'])
+    for i in organization_started_q:
+        org_started_labels.append(str(i['org_started_using_vct_name']))
+        org_started_data.append(i['sum'])
 
- 
-    return render(request, 'frontend/chart.html', {
-        'labels_1': labels_1,
-        'data_1': data_1,
-    })
 
-def bar_chart_internet_bandwidth(request):
-    labels_2 = []
-    data_2 = []
+    # chart 3
+    chart_3_labels = indv_started_labels + org_started_labels
+    chart_3_labels_sorted = sorted(chart_3_labels, key=lambda x: datetime.datetime.strptime(x, '%Y-%m-%d'))
+    # print(chart_3_labels_sorted)
 
-    q_1 = Individual.objects.filter().values('indv_recommend_vct').order_by('sum').annotate(sum=Count('indv_recommend_vct'))
+
+    # chart 4
+    indv_prob_occur_q = Individual.objects.filter().\
+                    values('indv_problem_occurred__probl_occur_name').order_by('indv_problem_occurred').\
+                    annotate(sum=Count('indv_problem_occurred'))
+
+    org_prob_occur_q = Organization.objects.filter().\
+                    values('org_problem_occurred__probl_occur_name').order_by('org_problem_occurred').\
+                    annotate(sum=Count('org_problem_occurred'))
+
+    indv_prob_labels = []
+    indv_prob_data = []
+    for i in indv_prob_occur_q:
+        indv_prob_labels.append(i['indv_problem_occurred__probl_occur_name'])
+        indv_prob_data.append(i['sum'])
+
+    org_prob_labels = []
+    org_prob_data = []
+    for i in org_prob_occur_q:
+        org_prob_labels.append(i['org_problem_occurred__probl_occur_name'])
+        org_prob_data.append(i['sum'])
+
+    print(indv_prob_occur_q)
+    print(org_prob_occur_q)
+
+    total_indv = 0
+    for i in indv_prob_occur_q:
+        total_indv += i['sum']
+
+    total_org = 0
+    for i in org_prob_occur_q:
+        total_org += i['sum']
+    print(total_org)
+    # chart 5
+    indv_satisfactory_q = Individual.objects.filter().\
+                    values('indv_satifactory').order_by('indv_satifactory').\
+                    annotate(sum=Count('indv_satifactory'))
+
+    indv_satis_labels = []
+    indv_satis_data = []
+    for i in indv_satisfactory_q:
+        indv_satis_labels.append(i['indv_satifactory'])
+        indv_satis_data.append(i['sum'])
+
+
+    # chart 6
+    indv_place_q = Individual.objects.filter().\
+                    values('indv_place').order_by('indv_place').\
+                    annotate(sum=Count('indv_place'))
+
+    org_place_q = Organization.objects.filter().\
+                    values('org_place').order_by('org_place').\
+                    annotate(sum=Count('org_place'))
     
-    for i_1 in q_1 :
-        data_2.append((i_1['sum']))
-        labels_2.append(i_1['indv_recommend_vct'])
+    indv_place_labels = []
+    indv_place_data = []
 
- 
-    return render(request, 'frontend/chart.html', {
-        'labels_2': labels_2,
-        'data_2': data_2,
-    })
+    for i in indv_place_q:
+        indv_place_labels.append(i['indv_place'])
+        indv_place_data.append(i['sum'])
+
+    org_place_labels = []
+    org_place_data = []
+
+    for i in org_place_q:
+        org_place_labels.append(i['org_place'])
+        org_place_data.append(i['sum'])
 
 
-def indv_count (request):
-    count_indv = Individual.objects.count()
-    return render(request, 'frontend/chart.html', count_indv)
+
+    # chart 7 
+    indv_recom_q = Individual.objects.filter().\
+                    values('indv_recommend_vct').order_by('indv_recommend_vct').\
+                    annotate(sum=Count('indv_recommend_vct'))
+
+    org_recom_q = Organization.objects.filter().\
+                    values('org_recommend_vct').order_by('org_recommend_vct').\
+                    annotate(sum=Count('org_recommend_vct'))
+
+
+    context = {
+        # graph 1
+        'indv_started_labels': indv_started_labels,
+        'indv_started_data': indv_started_data,
+
+        # graph 2
+        'org_started_labels': org_started_labels,
+        'org_started_data': org_started_data,
+
+        # graph 3
+        'chart_3_labels': chart_3_labels_sorted,
+
+        # graph 4
+        'indv_prob_labels': indv_prob_labels,
+        'total_indv': total_indv,
+        'org_prob_labels': org_prob_labels,
+        'total_org': total_org,
+
+
+        # graph 5
+        'indv_satis_labels': indv_satis_labels,
+        'indv_satis_data': indv_satis_data,
+
+     
+        # graph 6
+        'indv_place_labels': indv_place_labels,
+        'indv_place_data': indv_place_data,
+
+        'org_place_labels': org_place_labels,
+        'org_place_data': org_place_data,
+
+
+    }
+
+    return render(request, 'frontend/chart.html', context=context)
+
+
+

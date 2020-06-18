@@ -9,7 +9,6 @@ urlpatterns = [
     # path('chart', views.chart, name='chart'),
     
     #chart
-    path('pie-chart/', views.pie_chart_VCT_recommend, name='pie-chart'),
     path('pie-chart/', views.pie_chart, name='pie-chart'),
 
 ]
