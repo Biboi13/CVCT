@@ -5,7 +5,7 @@ from django.db import models
 #table_1
 class VCT(models.Model):
 	vct_name = models.CharField(max_length=200)
-	vct_active_users = models.IntegerField(default=0)
+	vct_active_users = models.CharField(max_length=200)
 	vct_developer = models.CharField(max_length=200)
 	
 	def __str__(self):

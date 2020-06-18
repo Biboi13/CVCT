@@ -64,7 +64,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #156ec7;
+  color: #212529;
   text-align: left;
   background-color: #fff;
 }
@@ -3191,7 +3191,7 @@ input[type=button].btn-block {
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
   font-size: 0.875rem;
-  color: #0B66AC;
+  color: #6c757d;
   white-space: nowrap;
 }
 

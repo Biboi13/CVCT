@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import  get_object_or_404, render, redirect
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -159,3 +159,13 @@ def Org_delete(request, pk):
 	org.delete()
 	return Response('Item succsesfully delete!')
 
+
+def deleteIndividual(request,owner_id):
+    owner = get_object_or_404(Owner, pk=owner_id)
+    owner.delete()
+    return redirect('index')
+
+def deleteOrganization(request,org_id):
+    org = get_object_or_404(Organization, pk=org_id)
+    org.delete()
+    return redirect('index')
