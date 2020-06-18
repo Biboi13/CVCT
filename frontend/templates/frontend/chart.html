@@ -29,52 +29,214 @@
 
 
 
-            <div class="col-lg-6">
-                <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-chart-pie mr-1"></i>Video Conference Tool Individual Recommended {{ count_indv }}</div>
-                    <div class="card-body"><canvas id="pie-chartzz" width="100%" height="50"></canvas></div>
             
-                </div>
-            </div>
         </div>
     </div>
 
-     
+    <div class="chart-1">
+      <h1>Chart 1</h1>
+      <canvas id="chart-1" width="100%" height="30"></canvas>
+  </div>
+
+    <div class="chart-2">
+      <h1>Chart 2</h1>
+      <canvas id="chart-2" width="100%" height="30"></canvas>
+    </div>
       
+    <div class="chart-3">
+        <h1>Not done</h1>
+      <h1>Chart 3</h1>
+      <canvas id="chart-3" width="100%" height="30"></canvas>
+    </div>
+
+
+    <div class="chart-4">
+      <h1>Chart 4</h1>
+      <canvas id="chart-4" width="100%" height="30"></canvas>
+    </div>
+
+
+    <div class="chart-5">
+      <h1>Chart 5</h1>
+      <canvas id="chart-5" width="100%" height="30"></canvas>
+    </div>
+
+
+
+
+
     <script>
-    var ctx_1 = document.getElementById("bar-chartzz");
-    var myBarChart = new Chart(ctx_1, {
-      type: 'bar',
+
+      // chart 1
+    var ctx = document.getElementById("chart-1");
+    var myBarChart = new Chart(ctx, {
+      
+      type: 'line',
       data: {
-        labels: {{ labels_2|safe }},
+        labels: {{ indv_started_labels|safe }},
         datasets: [{
-          data: {{ data_2|safe}} ,
-          backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745','#236541','#56ff55','orange', 'violet'],
+          label: 'Chart 1',
+          data: {{ indv_started_data|safe}} ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
         }],
-
       },
-
-
     });
-  
-    </script>
 
-<script>
-    var ctx = document.getElementById("pie-chartzz");
-    var myPieChart = new Chart(ctx, {
+
+    // chart 2
+    var ctx_2 = document.getElementById("chart-2");
+    var myBarChart = new Chart(ctx_2, {
+      
+      type: 'line',
+      data: {
+        labels: {{ org_started_labels|safe }},
+        datasets: [{
+          label: 'Chart 2',
+          data: {{ org_started_data|safe}} ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+        }],
+      },
+    });
+
+    // chart 3
+    var ctx_3 = document.getElementById("chart-3");
+    var myBarChart = new Chart(ctx_3, {
+      
+      type: 'line',
+      data: {
+        labels: {{ indv_started_labels|safe }},
+        datasets: [{
+          label: 'Individuals',
+            data: {{ indv_started_data|safe }}
+        }, {
+            label: 'Organization',
+            data: {{org_started_data|safe}},
+
+
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+        }],
+      },
+    });
+
+
+    // Chart 4
+    var ctx_4 = document.getElementById("chart-4");
+    var myBarChart = new Chart(ctx_4, {
+      
       type: 'pie',
       data: {
-        labels: {{ labels_1|safe }},
+        labels: ['Individual', 'Organization'],
         datasets: [{
-          data: {{ data_1|safe}} ,
-          backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745','#236541','#56ff55','orange', 'violet'],
+          label: 'Chart 5',
+          data: ["{{ total_indv }}", "{{ total_org }}"] ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
         }],
-
       },
-
-
     });
+
+
+    // chart 5
+    var ctx_5 = document.getElementById("chart-5");
+    var myBarChart = new Chart(ctx_5, {
+      
+      type: 'bar',
+      data: {
+        labels: {{ indv_satis_labels|safe }},
+        datasets: [{
+          label: 'Chart 5',
+          data: {{ indv_satis_data|safe}} ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+        }],
+      },
+    });
+
+
+    // chart 6
+    var ctx_6 = document.getElementById("chart-6");
+    var myBarChart = new Chart(ctx_6, {
+      
+      type: 'bar',
+      data: {
+        labels: {{ indv_satis_labels|safe }},
+        datasets: [{
+          label: 'Chart 5',
+          data: {{ indv_satis_data|safe}} ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+        }],
+      },
+    });
+
+
+
+
+      // chart 7
+      var ctx_7 = document.getElementById("chart-7");
+    var myBarChart = new Chart(ctx_7, {
+      
+      type: 'bar',
+      data: {
+        labels: {{ indv_satis_labels|safe }},
+        datasets: [{
+          label: 'Chart 5',
+          data: {{ indv_satis_data|safe}} ,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+        }],
+      },
+    });
+
+  
   
     </script>
+
+
 </main>
 {% endblock %}
