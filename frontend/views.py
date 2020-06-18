@@ -94,5 +94,5 @@ def bar_chart_internet_bandwidth(request):
 
 
 def indv_count (request):
-    count_indv = Individual.objects.count();
+    count_indv = Individual.objects.count()
     return render(request, 'frontend/chart.html', count_indv)
